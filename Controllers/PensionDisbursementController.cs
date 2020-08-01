@@ -11,12 +11,7 @@ namespace PensionDisbursement.Controllers
     [ApiController]
     public class PensionDisbursementController : ControllerBase
     {
-        //ProcessPensionInput pension = new ProcessPensionInput
-        //{
-        //    adhaarNumber = "111122223333",
-        //    pensionAmount = 35550,
-        //    bankServiceCharge = 550
-        //};
+        
 
 
 
