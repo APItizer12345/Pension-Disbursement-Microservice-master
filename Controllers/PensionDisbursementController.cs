@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
+
+//change get to post
+
 namespace PensionDisbursement.Controllers
 {
     [Route("api/[controller]")]
@@ -17,7 +20,7 @@ namespace PensionDisbursement.Controllers
 
 
 
-        [HttpGet]
+        [HttpPost]
         public int GetDisbursePension()
         {
 
