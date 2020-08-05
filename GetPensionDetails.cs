@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace PensionDisbursement
 {
     public class GetPensionDetails
     {
-         public HttpResponseMessage GetDetailResponse(string aadhar)
+         public PensionerDetail GetDetailResponse(string aadhar)
         {
+           
             HttpResponseMessage response = new HttpResponseMessage();
             using (var client = new HttpClient())
             {
@@ -23,9 +25,11 @@ namespace PensionDisbursement
                 }
                 catch (Exception e) { response = null; }
             }
-            
 
-            return response;
+            string detailsResponse = response.Content.ReadAsStringAsync().Result;
+            PensionerDetail pen = JsonConvert.DeserializeObject<PensionerDetail>(detailsResponse);
+            
+            return pen;
         }
 
        

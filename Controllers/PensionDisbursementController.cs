@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
@@ -21,60 +22,46 @@ namespace PensionDisbursement.Controllers
 
 
         [HttpPost]
-        public int GetDisbursePension()
+        public int GetDisbursePension(ProcessPensionInput pension)
         {
 
-
-
-            ProcessPensionInput pension = new ProcessPensionInput();
-            GetProcessPensionValue getProcessPensionDetail = new GetProcessPensionValue();
-
-
-            HttpResponseMessage _processPensionResponse = getProcessPensionDetail.GetProcessPensionResponse();
-            if (_processPensionResponse == null)
-            {
-                return 21;
-            }
-            string processPensionResponse = _processPensionResponse.Content.ReadAsStringAsync().Result;
-            dynamic processPensiondetails = JObject.Parse(processPensionResponse);
-            pension.adhaarNumber = processPensiondetails.aadhar;
-            pension.pensionAmount = processPensiondetails.pensionAmount;
-            pension.bankServiceCharge = processPensiondetails.serviceCharge;
 
             
 
             PensionerDetail pensionerDetail = new PensionerDetail();
             GetPensionDetails getPensionerDetail = new GetPensionDetails();
 
-
-            HttpResponseMessage _detailsResponse = getPensionerDetail.GetDetailResponse(pension.adhaarNumber);
-            if (_detailsResponse == null)
-            {
-                return 21;
-            }
-            string detailsResponse = _detailsResponse.Content.ReadAsStringAsync().Result;
-            dynamic details = JObject.Parse(detailsResponse);
-
-
-            pensionerDetail.allowances = details.allowances;
-            pensionerDetail.salaryEarned = details.salaryEarned;
-            pensionerDetail.pensionType = details.pensionType;
+            pensionerDetail = getPensionerDetail.GetDetailResponse(pension.aadharNumber);
+            
 
 
 
 
             int status = 0;
-
+            int bankServiceCharge;
+            if (pension.bankType == 1)
+                bankServiceCharge = 500;
+            else if (pension.bankType == 2)
+                bankServiceCharge = 550;
+            else
+                bankServiceCharge = 0;
             double pensionCalculated;
-            if (pensionerDetail.pensionType == 1)//change equating method
+            try
             {
-                pensionCalculated = (pensionerDetail.salaryEarned * 0.8) + pensionerDetail.allowances + pension.bankServiceCharge;
+                int pType = pensionerDetail.pensionType;
+            }
+            catch (NullReferenceException e)
+            {
+                return 21;
+            }
+            if (pensionerDetail.pensionType == 1)
+            {
+                pensionCalculated = (pensionerDetail.salaryEarned * 0.8) + pensionerDetail.allowances + bankServiceCharge;
             }
             else
             {
-                pensionCalculated = (pensionerDetail.salaryEarned * 0.5) + pensionerDetail.allowances + pension.bankServiceCharge;
+                pensionCalculated = (pensionerDetail.salaryEarned * 0.5) + pensionerDetail.allowances + bankServiceCharge;
             }
-
             if (Convert.ToDouble(pension.pensionAmount) == pensionCalculated)
             {
                 status = 10;
