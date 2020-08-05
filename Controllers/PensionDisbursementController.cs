@@ -26,15 +26,17 @@ namespace PensionDisbursement.Controllers
         {
 
 
-            
 
+            
             PensionerDetail pensionerDetail = new PensionerDetail();
             GetPensionDetails getPensionerDetail = new GetPensionDetails();
 
             pensionerDetail = getPensionerDetail.GetDetailResponse(pension.aadharNumber);
-            
 
 
+            if (pensionerDetail == null)
+                return 21;
+           
 
 
             int status = 0;
@@ -46,14 +48,7 @@ namespace PensionDisbursement.Controllers
             else
                 bankServiceCharge = 0;
             double pensionCalculated;
-            try
-            {
-                int pType = pensionerDetail.pensionType;
-            }
-            catch (NullReferenceException e)
-            {
-                return 21;
-            }
+            
             if (pensionerDetail.pensionType == 1)
             {
                 pensionCalculated = (pensionerDetail.salaryEarned * 0.8) + pensionerDetail.allowances + bankServiceCharge;
