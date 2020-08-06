@@ -17,8 +17,10 @@ namespace PensionDisbursement.Controllers
     [ApiController]
     public class PensionDisbursementController : ControllerBase
     {
-        
 
+
+
+        static readonly log4net.ILog _log4net = log4net.LogManager.GetLogger(typeof(PensionDisbursementController));
 
 
         [HttpPost]
@@ -26,8 +28,8 @@ namespace PensionDisbursement.Controllers
         {
 
 
+            _log4net.Info("Pensioner details from Process Pension Input");
 
-            
             PensionerDetail pensionerDetail = new PensionerDetail();
             GetPensionDetails getPensionerDetail = new GetPensionDetails();
 
