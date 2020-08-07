@@ -7,8 +7,8 @@ namespace PensionDisbursement
 {
     public class ProcessPensionInput
     {
-        public string aadharNumber { get; set; }
-        public double pensionAmount { get; set; }
-        public int bankType { get; set; }
+        public string AadharNumber { get; set; }
+        public double PensionAmount { get; set; }
+        public int BankType { get; set; }
     }
 }
