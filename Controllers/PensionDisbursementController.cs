@@ -53,11 +53,11 @@ namespace PensionDisbursement.Controllers
             
             if (pensionerDetail.pensionType == 1)
             {
-                pensionCalculated = (pensionerDetail.salaryEarned * 0.8) + pensionerDetail.allowances + bankServiceCharge;
+                pensionCalculated = (pensionerDetail.SalaryEarned * 0.8) + pensionerDetail.Allowances + bankServiceCharge;
             }
             else
             {
-                pensionCalculated = (pensionerDetail.salaryEarned * 0.5) + pensionerDetail.allowances + bankServiceCharge;
+                pensionCalculated = (pensionerDetail.SalaryEarned * 0.5) + pensionerDetail.Allowances + bankServiceCharge;
             }
             if (Convert.ToDouble(pension.pensionAmount) == pensionCalculated)
             {
