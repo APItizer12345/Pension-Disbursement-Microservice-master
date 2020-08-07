@@ -8,8 +8,8 @@ namespace PensionDisbursement
     public class PensionerDetail
     {
         
-        public int allowances { get; set; }
-        public int salaryEarned { get; set; }
-        public int pensionType { get; set; }
+        public int Allowances { get; set; }
+        public int SalaryEarned { get; set; }
+        public int PensionType { get; set; }
     }
 }
